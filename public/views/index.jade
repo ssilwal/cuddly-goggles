@@ -1,5 +1,14 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .ui.container
+    h1.ui.header JJsX
+    h3.ui.header Login with UI and password
+    .form.ui.container.fluid
+      form.ui.form
+        .field
+          label Uni
+          input(name='uni')
+          label password
+          input(name='password', type='password')
+        button.ui.secondary.button(type='password') sign in
