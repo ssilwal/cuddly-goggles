@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  .ui.container
+  .ui.segment.basic
     h1.ui.header JJsX
     h3.ui.header Login with UI and password
     .form.ui.container.fluid
@@ -11,4 +11,15 @@ block content
           input(name='uni')
           label password
           input(name='password', type='password')
-        button.ui.secondary.button(type='password') sign in
+        button.ui.secondary.button(type='password') Sign In
+    .ui.horizontal.divider Or
+    h3 Make an Account
+    .form.ui.container.fluid
+      form.ui.form(action='/signup', method='post')
+        .field
+            label Uni
+            input(name='uni')
+            label password
+            input(name='password', type='password')      
+        button.ui.teal.icon.button(type='submit') Sign Up
+   

@@ -15,6 +15,16 @@ module.exports = (app, twilioClient, db, auth) => {
 		})
 	});
 
+	app.post('/signup', (req, res) => {
+		const { uni, password } = req.body;
+		auth.createUserWithEmailAndPassword(uni, password)
+			.then(user => {
+				req.session.uid = user.uid;
+				req.session.email = user.email;
+				res.redirect('/home');
+			})
+	})
+
 	app.post('/logout', (req, res) => {
 		req.session.reset();
 		res.redirect('/');
@@ -50,7 +60,7 @@ module.exports = (app, twilioClient, db, auth) => {
 	})
 
 	app.get('/home', (req, res) => {
-		if(req.session && req.session.user) {
+		if(req.session && req.session.uid) {
 			res.render('home', {email: req.session.email});
 		} else {
 			res.redirect('/');
