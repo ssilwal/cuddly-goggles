@@ -2,8 +2,20 @@ extends layout
 
 block content
 	.ui.container
-		form.ui.form
+		.ui.segment.clearing
+			.h1 Hello #{email}, place an order below, we'll text you when it's ready
+			form.ui.form(action='/logout', method='post')
+				.field
+					button.ui.right.floated.red.button(type='submit') logout
+		form.ui.form(action='orderSubmit', method='post')
 			.field
 				label Main Thing
 				input(name='main')
-				
+			.field
+				label Special Instruction
+				input(name='special')
+			.field
+				label Phone Number
+				input(name='phoneNumber')
+			.field
+				button.ui.green.button(type='submit') Submit

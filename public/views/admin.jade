@@ -5,14 +5,13 @@ block content
 		h2.ui.header Admin
 		.orders.ui.container
 			.ui.segments
-				.ui.segment.clearing
-					h4 Order Main Contents
-					p Special comments
-					span status
-					.ui.right.floated.button.green Pick Up
-				.ui.segment.clearing
-					h4 Order Main Contents
-					p Special comments
-					span status
-					.ui.right.floated.button.green Pick Up
+				for order in orders
+					form.ui.form(action='/orderComplete', method='post')
+						.ui.segment.clearing
+							h4= order.main
+							p= order.special
+							input(type='hidden', name='uid' value=`${order.uid}`)
+							input(type='hidden', name='phoneNumber', value=`${order.phoneNumber}`)
+							button.ui.right.floated.button.green(type='submit') Finished
+
 

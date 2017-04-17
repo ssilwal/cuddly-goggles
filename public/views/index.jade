@@ -5,7 +5,7 @@ block content
     h1.ui.header JJsX
     h3.ui.header Login with UI and password
     .form.ui.container.fluid
-      form.ui.form
+      form.ui.form(action='/login', method='post')
         .field
           label Uni
           input(name='uni')
