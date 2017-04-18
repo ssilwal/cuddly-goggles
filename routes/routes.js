@@ -26,8 +26,10 @@ module.exports = (app, twilioClient, db, auth) => {
 	})
 
 	app.post('/logout', (req, res) => {
-		req.session.reset();
-		res.redirect('/');
+		auth.signOut().then(() => {
+			req.session.reset();
+			res.redirect('/');
+		})
 	});
 
 	app.post('/orderSubmit', (req, res) => {
@@ -49,7 +51,7 @@ module.exports = (app, twilioClient, db, auth) => {
 		db.ref('/orders').child(uid).remove()
 			.then(() => {
 				twilioClient.messages.create({
-					body: 'Your food is ready you fucking weeb',
+					body: 'Your food is ready!',
 					to: phoneNumber,
 					from: '+16572124392',
 				}, error => {
@@ -58,14 +60,6 @@ module.exports = (app, twilioClient, db, auth) => {
 				res.redirect('/admin');
 			})
 	})
-
-	app.get('/home', (req, res) => {
-		if(req.session && req.session.uid) {
-			res.render('home', {email: req.session.email});
-		} else {
-			res.redirect('/');
-		}
-	});
 
 	app.get('/admin', (req, res) => {
 		db.ref('/orders').once('value').then(snapshot => {
@@ -76,5 +70,13 @@ module.exports = (app, twilioClient, db, auth) => {
 			})
 			res.render('admin', { orders: orders });
 		})
+	});
+
+	app.get('/home', (req, res) => {
+		if(req.session && req.session.uid) {
+			res.render('home', {email: req.session.email});
+		} else {
+			res.redirect('/');
+		}
 	});
 };
